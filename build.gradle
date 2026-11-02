@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def seleniumVersion = "4.39.0"
+
+dependencies {
+    testImplementation(
+            "org.junit.jupiter:junit-jupiter:5.11.0",
+            "org.seleniumhq.selenium:selenium-java:$seleniumVersion",
+            "org.aeonbits.owner:owner:1.0.12",
+            "io.github.bonigarcia:webdrivermanager:5.9.2",
+            "org.slf4j:slf4j-simple:2.0.13"
+    )
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+    testLogging {
+        events "started", "skipped", "failed", "standard_out"
+    }
+}
